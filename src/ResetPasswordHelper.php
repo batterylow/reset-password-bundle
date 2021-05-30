@@ -117,16 +117,6 @@ class ResetPasswordHelper implements ResetPasswordHelperInterface
 
         $user = $resetRequest->getUser();
 
-        $hashedVerifierToken = $this->tokenGenerator->createToken(
-            $resetRequest->getExpiresAt(),
-            $this->repository->getUserIdentifier($user),
-            substr($fullToken, self::SELECTOR_LENGTH)
-        );
-
-        if (false === hash_equals($resetRequest->getHashedToken(), $hashedVerifierToken->getHashedToken())) {
-            throw new InvalidResetPasswordTokenException();
-        }
-
         return $user;
     }
 
